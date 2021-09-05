@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net472</TargetFrameworks>
+		<LangVersion>8.0</LangVersion>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Resources\Output\EmptyAssetManifest.cs"/>
+		<Compile Remove="Resources\Output\FullAssetManifest.cs"/>
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\Input\badscript.txt"/>
+		<None Remove="Resources\Input\font.woff2"/>
+		<None Remove="Resources\Input\image.svg"/>
+		<None Remove="Resources\Input\script.js"/>
+		<None Remove="Resources\Input\style.css"/>
+		<None Remove="Resources\Output\image.min.svg"/>
+		<None Remove="Resources\Output\script.min.js"/>
+		<None Remove="Resources\Output\style.min.css"/>
+		<None Remove="Resources\Output\style.min.css.br"/>
+		<None Remove="Resources\Output\style.min.css.gzip"/>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\Input\badscript.txt"/>
+		<EmbeddedResource Include="Resources\Input\font.woff2"/>
+		<EmbeddedResource Include="Resources\Input\image.svg"/>
+		<EmbeddedResource Include="Resources\Input\script.js"/>
+		<EmbeddedResource Include="Resources\Input\style.css"/>
+		<EmbeddedResource Include="Resources\Output\EmptyAssetManifest.cs"/>
+		<EmbeddedResource Include="Resources\Output\FullAssetManifest.cs"/>
+		<EmbeddedResource Include="Resources\Output\image.min.svg"/>
+		<EmbeddedResource Include="Resources\Output\script.min.js"/>
+		<EmbeddedResource Include="Resources\Output\style.min.css"/>
+		<EmbeddedResource Include="Resources\Output\style.min.css.br"/>
+		<EmbeddedResource Include="Resources\Output\style.min.css.gzip"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0"/>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
+		<PackageReference Include="Moq" Version="4.16.1"/>
+		<PackageReference Include="xunit" Version="2.4.1"/>
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" Version="3.1.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\AdamBarclay.WebAssetBuilder\AdamBarclay.WebAssetBuilder.csproj"/>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+{
+	"settings": {
+		"documentationRules": {
+			"documentInterfaces": false,
+			"documentExposedElements": true,
+			"documentInternalElements": false,
+			"documentPrivateElements": false,
+			"documentPrivateFields": false,
+			"xmlHeader": false
+		},
+		"indentation": {
+			"tabSize": 4,
+			"useTabs": true
+		},
+		"layoutRules": {
+			"newlineAtEndOfFile": "require",
+			"allowConsecutiveUsings": false
+		},
+		"orderingRules": {
+			"usingDirectivesPlacement": "outsideNamespace",
+			"blankLinesBetweenUsingGroups": "omit"
+		}
+	}
+}

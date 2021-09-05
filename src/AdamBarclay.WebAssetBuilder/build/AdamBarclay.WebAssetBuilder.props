@@ -1,0 +1,11 @@
+﻿<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+	<PropertyGroup>
+		<TaskFolder Condition=" '$(MSBuildRuntimeType)' == 'Core' ">net5.0</TaskFolder>
+		<TaskFolder Condition=" '$(MSBuildRuntimeType)' != 'Core' ">net472</TaskFolder>
+		<TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(TaskFolder)\AdamBarclay.WebAssetBuilder.dll</TaskAssembly>
+		<AssetOutputPath>../../artifacts/assets/</AssetOutputPath>
+		<FileTypesToCompress>.css;.js;.svg</FileTypesToCompress>
+	</PropertyGroup>
+	<UsingTask TaskName="AdamBarclay.WebAssetBuilder.Tasks.WebAssetBuilderMissingManifestTask" AssemblyFile="$(TaskAssembly)"/>
+	<UsingTask TaskName="AdamBarclay.WebAssetBuilder.Tasks.WebAssetBuilderTask" AssemblyFile="$(TaskAssembly)"/>
+</Project>
