@@ -17,8 +17,8 @@ jobs:
       env:
         DOTNET_NOLOGO: true
     - name: Create Nuget Package
-      run: dotnet pack --nologo --configuration Release --no-restore --output artifacts -p:ContinuousIntegrationBuild=true -p:RepositoryCommit=${GITHUB_SHA} -p:Version=${{ github.event.release.tag_name }}
+      run: dotnet pack --nologo --no-restore --configuration Release --output artifacts -p:ContinuousIntegrationBuild=true -p:Version=${{ github.event.release.tag_name }} -p:RepositoryCommit="${GITHUB_SHA}"
     - name: Push Nuget Package
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-      run: dotnet nuget push artifacts/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
