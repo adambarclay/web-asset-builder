@@ -1,8 +1,8 @@
-﻿<Project>
+<Project>
 	<Target Name="CreateMissingManifest" BeforeTargets="BeforeCompile">
 		<WebAssetBuilderMissingManifestTask AssemblyName="$(AssemblyName)"/>
 	</Target>
 	<Target Name="BuildWebAssets" BeforeTargets="Build;Rebuild">
-		<WebAssetBuilderTask AssemblyName="$(AssemblyName)" AssetOutputPath="$(AssetOutputPath)" FileTypesToCompress="$(FileTypesToCompress)" ProjectFiles="@(None)"/>
+		<WebAssetBuilderTask AssemblyName="$(AssemblyName)" AssetOutputPath="$(AssetOutputPath)" FileTypesToCompress="$(FileTypesToCompress)"  FileTypesToMangle="$(FileTypesToMangle)" ProjectFiles="@(None)"/>
 	</Target>
 </Project>
