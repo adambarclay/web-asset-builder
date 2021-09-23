@@ -20,7 +20,8 @@ namespace AdamBarclay.WebAssetBuilder.Tests
 				AssemblyName = "TestAssembly",
 				AssetOutputPath = "OutputPath",
 				BuildEngine = buildEngine.Object,
-				FileTypesToCompress = new[] { ".css", ".js", ".svg" },
+				FileTypesToCompress = new[] { ".css", ".js", ".svg", ".txt" },
+				FileTypesToMangle = new[] { ".css", ".js" },
 				ProjectFiles = ProjectFileHelper.Create()
 			};
 		}

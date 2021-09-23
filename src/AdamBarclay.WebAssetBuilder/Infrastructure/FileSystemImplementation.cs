@@ -41,7 +41,7 @@ namespace AdamBarclay.WebAssetBuilder.Infrastructure
 				return System.IO.File.CreateText(path);
 			}
 
-			public bool Exists(string? path)
+			public bool Exists(string path)
 			{
 				return System.IO.File.Exists(path);
 			}

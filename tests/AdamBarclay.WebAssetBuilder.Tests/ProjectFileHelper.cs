@@ -7,7 +7,7 @@ namespace AdamBarclay.WebAssetBuilder.Tests
 	{
 		internal static string[] Create()
 		{
-			return new[] { "css/style.css", "f/font.woff2", "js/script.js", "svg/image.svg" };
+			return new[] { "css/style.css", "f/font.woff2", "js/script.js", "robots.txt", "svg/image.svg" };
 		}
 
 		internal static string[] Create(string[] extra)

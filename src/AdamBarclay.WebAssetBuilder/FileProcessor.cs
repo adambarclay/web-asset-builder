@@ -24,7 +24,8 @@ namespace AdamBarclay.WebAssetBuilder
 			FileSystem fileSystem,
 			string fileName,
 			string assetOutputPath,
-			HashSet<string> fileTypesToCompress)
+			HashSet<string> fileTypesToCompress,
+			HashSet<string> fileTypesToMangleLookup)
 		{
 			var fileExtension = Path.GetExtension(fileName);
 
@@ -42,30 +43,39 @@ namespace AdamBarclay.WebAssetBuilder
 			}
 
 			var compressFile = fileTypesToCompress.Contains(fileExtension);
+			var mangleFileName = fileTypesToMangleLookup.Contains(fileExtension);
 
-			var outputKey = FileProcessor.GenerateOutputKey(fileName, fileContents);
+			var outputKey = FileProcessor.GenerateOutputKey(fileName, fileContents, mangleFileName);
 
 			FileProcessor.OutputUncompressed(fileSystem, assetOutputPath, outputKey, fileContents);
 			FileProcessor.OutputGzipFile(fileSystem, assetOutputPath, outputKey, fileContents, compressFile);
 			FileProcessor.OutputBrotliFile(fileSystem, assetOutputPath, outputKey, fileContents, compressFile);
 
-			return (true, outputKey);
+			return (true, outputKey.TrimEnd('.'));
 		}
 
-		private static string GenerateOutputKey(string fileName, byte[] fileContents)
+		private static string GenerateOutputKey(string fileName, byte[] fileContents, bool mangleFileName)
 		{
-			byte[] hash;
-
-			using (var hashAlgorithm = SHA256.Create()!)
+			if (Path.GetFileName(fileName)!.Equals("robots.txt", StringComparison.OrdinalIgnoreCase))
 			{
-				hash = hashAlgorithm.ComputeHash(fileContents);
+				return fileName;
 			}
 
 			var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
 
-			return Path.Combine(
-				Path.GetDirectoryName(fileName) ?? string.Empty,
-				fileNameWithoutExtension + "-" + FileProcessor.ToBase36String(hash));
+			if (mangleFileName)
+			{
+				byte[] hash;
+
+				using (var hashAlgorithm = SHA256.Create()!)
+				{
+					hash = hashAlgorithm.ComputeHash(fileContents);
+				}
+
+				fileNameWithoutExtension += "-" + FileProcessor.ToBase36String(hash);
+			}
+
+			return Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, fileNameWithoutExtension + ".");
 		}
 
 		private static (bool Error, byte[] FileContents) MinifyFile(
@@ -124,7 +134,7 @@ namespace AdamBarclay.WebAssetBuilder
 			byte[] fileContents,
 			bool compressFile)
 		{
-			var brotliOutputPath = Path.Combine(assetOutputPath, "br", outputKey + ".").Replace('\\', '/');
+			var brotliOutputPath = Path.Combine(assetOutputPath, "br", outputKey).Replace('\\', '/');
 
 			fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(brotliOutputPath)!);
 
@@ -153,7 +163,7 @@ namespace AdamBarclay.WebAssetBuilder
 			byte[] fileContents,
 			bool compressFile)
 		{
-			var gzipOutputPath = Path.Combine(assetOutputPath, "gzip", outputKey + ".").Replace('\\', '/');
+			var gzipOutputPath = Path.Combine(assetOutputPath, "gzip", outputKey).Replace('\\', '/');
 
 			fileSystem.Directory!.CreateDirectory(Path.GetDirectoryName(gzipOutputPath)!);
 
@@ -191,7 +201,7 @@ namespace AdamBarclay.WebAssetBuilder
 			string outputKey,
 			byte[] fileContents)
 		{
-			var outputPath = Path.Combine(assetOutputPath, "uncompressed", outputKey + ".").Replace('\\', '/');
+			var outputPath = Path.Combine(assetOutputPath, "uncompressed", outputKey).Replace('\\', '/');
 
 			fileSystem.Directory!.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 

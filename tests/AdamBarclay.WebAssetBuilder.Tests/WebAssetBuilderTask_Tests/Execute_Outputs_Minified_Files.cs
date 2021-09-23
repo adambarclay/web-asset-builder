@@ -81,10 +81,7 @@ namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderTask_Tests
 
 			using (var memoryStream = new MemoryStream())
 			{
-				fileSystem.Setup(
-						o => o.File!.OpenWrite(
-							"OutputPath/uncompressed/svg/image-1b9j8z50kty1rhk6v25aapbqngqhmcl3o0kmpi62l875l6e9is."))!
-					.Returns(memoryStream);
+				fileSystem.Setup(o => o.File!.OpenWrite("OutputPath/uncompressed/svg/image."))!.Returns(memoryStream);
 
 				task.Execute(fileSystem.Object!);
 

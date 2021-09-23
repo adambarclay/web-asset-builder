@@ -33,6 +33,9 @@ namespace AdamBarclay.WebAssetBuilder.Tests
 			fileSystem.Setup(o => o.File.ReadAllBytes("js/badscript.js"))!.Returns(
 				() => FileSystemHelper.ReadAllBytes("AdamBarclay.WebAssetBuilder.Tests.Resources.Input.badscript.txt"));
 
+			fileSystem.Setup(o => o.File.ReadAllBytes("robots.txt"))!.Returns(
+				() => FileSystemHelper.ReadAllBytes("AdamBarclay.WebAssetBuilder.Tests.Resources.Input.robots.txt"));
+
 			fileSystem.Setup(o => o.File.OpenWrite(It.IsAny<string>()!))!.Returns(() => new MemoryStream());
 
 			return fileSystem;

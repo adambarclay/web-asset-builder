@@ -19,6 +19,9 @@ namespace AdamBarclay.WebAssetBuilder.Tasks
 		public string[]? FileTypesToCompress { get; set; }
 
 		[Required]
+		public string[]? FileTypesToMangle { get; set; }
+
+		[Required]
 		public string[]? ProjectFiles { get; set; }
 
 		[ExcludeFromCodeCoverage]
@@ -59,6 +62,13 @@ namespace AdamBarclay.WebAssetBuilder.Tasks
 					return false;
 				}
 
+				if (this.FileTypesToMangle is null)
+				{
+					log.LogError("FileTypesToMangle is null.");
+
+					return false;
+				}
+
 				if (this.ProjectFiles is null)
 				{
 					log.LogError("ProjectFiles is null.");
@@ -72,6 +82,7 @@ namespace AdamBarclay.WebAssetBuilder.Tasks
 				}
 
 				var fileTypesToCompressLookup = new HashSet<string>(this.FileTypesToCompress);
+				var fileTypesToMangleLookup = new HashSet<string>(this.FileTypesToMangle);
 
 				var list = new SortedList<string, string>(this.ProjectFiles.Length, StringComparer.Ordinal);
 
@@ -84,7 +95,8 @@ namespace AdamBarclay.WebAssetBuilder.Tasks
 						fileSystem,
 						projectFile,
 						this.AssetOutputPath,
-						fileTypesToCompressLookup);
+						fileTypesToCompressLookup,
+						fileTypesToMangleLookup);
 
 					fileProcessSuccess = fileProcessSuccess && error;
 

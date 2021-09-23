@@ -11,9 +11,10 @@ namespace TestAssembly
 		private static readonly Dictionary<string, string> Files = new Dictionary<string, string>
 		{
 			{ "/css/style.css", "/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu" },
-			{ "/f/font.woff2", "/f/font-1mha83rlvsi6ybp10269l5y8qi5r0fp9jhwycov41495venjes" },
+			{ "/f/font.woff2", "/f/font" },
 			{ "/js/script.js", "/js/script-1qvd8xi1x7gicp9hzmn16150ffhqgemfx5eclq79349zpriln6" },
-			{ "/svg/image.svg", "/svg/image-1b9j8z50kty1rhk6v25aapbqngqhmcl3o0kmpi62l875l6e9is" }
+			{ "/robots.txt", "/robots.txt" },
+			{ "/svg/image.svg", "/svg/image" }
 		};
 
 		/// <summary>Maps the original file name of an asset to the transformed file name used for cache busting.</summary>

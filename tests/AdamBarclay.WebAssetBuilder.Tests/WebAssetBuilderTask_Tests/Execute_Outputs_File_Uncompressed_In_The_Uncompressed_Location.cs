@@ -52,10 +52,7 @@ namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderTask_Tests
 
 			using (var memoryStream = new MemoryStream())
 			{
-				fileSystem.Setup(
-					o => o.File!.OpenWrite(
-						"OutputPath/uncompressed/f/font-1mha83rlvsi6ybp10269l5y8qi5r0fp9jhwycov41495venjes."))!.Returns(
-					memoryStream);
+				fileSystem.Setup(o => o.File!.OpenWrite("OutputPath/uncompressed/f/font."))!.Returns(memoryStream);
 
 				task.Execute(fileSystem.Object!);
 

@@ -105,6 +105,24 @@ namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderTask_Tests
 		}
 
 		[Fact]
+		public static void When_The_FileTypesToMangle_Property_Is_Null()
+		{
+			var buildEngine = BuildEngineHelper.Create();
+
+			var task = WebAssetBuilderTaskHelper.Create(buildEngine);
+
+			task.FileTypesToMangle = null;
+
+			var returnValue = task.Execute(FileSystemHelper.Create().Object!);
+
+			Assert.False(returnValue);
+
+			buildEngine.Verify(
+				o => o.LogErrorEvent(It.Is<BuildErrorEventArgs>(e => e.Message == "FileTypesToMangle is null.")!),
+				Times.Once);
+		}
+
+		[Fact]
 		public static void When_The_Output_Directory_Can_Not_Be_Deleted()
 		{
 			var buildEngine = BuildEngineHelper.Create();

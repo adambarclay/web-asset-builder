@@ -12,9 +12,13 @@
 		<None Remove="Resources\Input\badscript.txt"/>
 		<None Remove="Resources\Input\font.woff2"/>
 		<None Remove="Resources\Input\image.svg"/>
+		<None Remove="Resources\Input\robots.txt"/>
 		<None Remove="Resources\Input\script.js"/>
 		<None Remove="Resources\Input\style.css"/>
 		<None Remove="Resources\Output\image.min.svg"/>
+		<None Remove="Resources\Output\robots.txt"/>
+		<None Remove="Resources\Output\robots.txt.br"/>
+		<None Remove="Resources\Output\robots.txt.gzip"/>
 		<None Remove="Resources\Output\script.min.js"/>
 		<None Remove="Resources\Output\style.min.css"/>
 		<None Remove="Resources\Output\style.min.css.br"/>
@@ -24,11 +28,15 @@
 		<EmbeddedResource Include="Resources\Input\badscript.txt"/>
 		<EmbeddedResource Include="Resources\Input\font.woff2"/>
 		<EmbeddedResource Include="Resources\Input\image.svg"/>
+		<EmbeddedResource Include="Resources\Input\robots.txt"/>
 		<EmbeddedResource Include="Resources\Input\script.js"/>
 		<EmbeddedResource Include="Resources\Input\style.css"/>
 		<EmbeddedResource Include="Resources\Output\EmptyAssetManifest.cs"/>
 		<EmbeddedResource Include="Resources\Output\FullAssetManifest.cs"/>
 		<EmbeddedResource Include="Resources\Output\image.min.svg"/>
+		<EmbeddedResource Include="Resources\Output\robots.txt"/>
+		<EmbeddedResource Include="Resources\Output\robots.txt.br"/>
+		<EmbeddedResource Include="Resources\Output\robots.txt.gzip"/>
 		<EmbeddedResource Include="Resources\Output\script.min.js"/>
 		<EmbeddedResource Include="Resources\Output\style.min.css"/>
 		<EmbeddedResource Include="Resources\Output\style.min.css.br"/>
@@ -38,6 +46,10 @@
 		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0"/>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
 		<PackageReference Include="Moq" Version="4.16.1"/>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="xunit" Version="2.4.1"/>
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
