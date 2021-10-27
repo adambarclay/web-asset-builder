@@ -47,9 +47,16 @@ namespace AdamBarclay.WebAssetBuilder
 
 			var outputKey = FileProcessor.GenerateOutputKey(fileName, fileContents, mangleFileName);
 
-			FileProcessor.OutputUncompressed(fileSystem, assetOutputPath, outputKey, fileContents);
-			FileProcessor.OutputGzipFile(fileSystem, assetOutputPath, outputKey, fileContents, compressFile);
-			FileProcessor.OutputBrotliFile(fileSystem, assetOutputPath, outputKey, fileContents, compressFile);
+			if (compressFile)
+			{
+				FileProcessor.OutputUncompressed(fileSystem, assetOutputPath, outputKey, fileContents);
+				FileProcessor.OutputGzipFile(fileSystem, assetOutputPath, outputKey, fileContents);
+				FileProcessor.OutputBrotliFile(fileSystem, assetOutputPath, outputKey, fileContents);
+			}
+			else
+			{
+				FileProcessor.OutputStatic(fileSystem, assetOutputPath, outputKey, fileContents);
+			}
 
 			return (true, outputKey.TrimEnd('.'));
 		}
@@ -131,8 +138,7 @@ namespace AdamBarclay.WebAssetBuilder
 			FileSystem fileSystem,
 			string assetOutputPath,
 			string outputKey,
-			byte[] fileContents,
-			bool compressFile)
+			byte[] fileContents)
 		{
 			var brotliOutputPath = Path.Combine(assetOutputPath, "br", outputKey).Replace('\\', '/');
 
@@ -140,18 +146,11 @@ namespace AdamBarclay.WebAssetBuilder
 
 			using (var outputFile = fileSystem.File.OpenWrite(brotliOutputPath)!)
 			{
-				if (compressFile)
+				using (var brotli = new Brotli(outputFile, CompressionMode.Compress, true))
 				{
-					using (var brotli = new Brotli(outputFile, CompressionMode.Compress, true))
-					{
-						brotli.SetQuality(11);
+					brotli.SetQuality(11);
 
-						brotli.Write(fileContents, 0, fileContents.Length);
-					}
-				}
-				else
-				{
-					outputFile.Write(fileContents, 0, fileContents.Length);
+					brotli.Write(fileContents, 0, fileContents.Length);
 				}
 			}
 		}
@@ -160,8 +159,7 @@ namespace AdamBarclay.WebAssetBuilder
 			FileSystem fileSystem,
 			string assetOutputPath,
 			string outputKey,
-			byte[] fileContents,
-			bool compressFile)
+			byte[] fileContents)
 		{
 			var gzipOutputPath = Path.Combine(assetOutputPath, "gzip", outputKey).Replace('\\', '/');
 
@@ -169,29 +167,38 @@ namespace AdamBarclay.WebAssetBuilder
 
 			using (var outputFile = fileSystem.File!.OpenWrite(gzipOutputPath)!)
 			{
-				if (compressFile)
+				using (var memoryStream = new MemoryStream())
 				{
-					using (var memoryStream = new MemoryStream())
+					using (var gzip = new GZipOutputStream(memoryStream))
 					{
-						using (var gzip = new GZipOutputStream(memoryStream))
-						{
-							gzip.IsStreamOwner = false;
-							gzip.SetLevel(9);
+						gzip.IsStreamOwner = false;
+						gzip.SetLevel(9);
 
-							gzip.Write(fileContents, 0, fileContents.Length);
-						}
-
-						var buffer = memoryStream.GetBuffer();
-
-						buffer[4] = buffer[5] = buffer[6] = buffer[7] = 0;
-
-						outputFile.Write(buffer, 0, (int)memoryStream.Length);
+						gzip.Write(fileContents, 0, fileContents.Length);
 					}
+
+					var buffer = memoryStream.GetBuffer();
+
+					buffer[4] = buffer[5] = buffer[6] = buffer[7] = 0;
+
+					outputFile.Write(buffer, 0, (int)memoryStream.Length);
 				}
-				else
-				{
-					outputFile.Write(fileContents, 0, fileContents.Length);
-				}
+			}
+		}
+
+		private static void OutputStatic(
+			FileSystem fileSystem,
+			string assetOutputPath,
+			string outputKey,
+			byte[] fileContents)
+		{
+			var outputPath = Path.Combine(assetOutputPath, "static", outputKey).Replace('\\', '/');
+
+			fileSystem.Directory!.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+
+			using (var outputFile = fileSystem.File!.OpenWrite(outputPath)!)
+			{
+				outputFile.Write(fileContents, 0, fileContents.Length);
 			}
 		}
 

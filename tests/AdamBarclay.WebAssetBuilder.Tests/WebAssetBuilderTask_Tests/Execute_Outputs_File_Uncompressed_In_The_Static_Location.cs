@@ -5,7 +5,7 @@ using Xunit;
 namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderTask_Tests
 {
 	[ExcludeFromCodeCoverage]
-	public static class Execute_Outputs_File_Uncompressed_In_The_Gzip_Location
+	public static class Execute_Outputs_File_Uncompressed_In_The_Static_Location
 	{
 		[Fact]
 		public static void When_The_File_Should_Not_Be_Compressed()
@@ -23,7 +23,7 @@ namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderTask_Tests
 
 			using (var memoryStream = new MemoryStream())
 			{
-				fileSystem.Setup(o => o.File!.OpenWrite("OutputPath/gzip/f/font."))!.Returns(memoryStream);
+				fileSystem.Setup(o => o.File!.OpenWrite("OutputPath/static/f/font."))!.Returns(memoryStream);
 
 				task.Execute(fileSystem.Object!);
 
