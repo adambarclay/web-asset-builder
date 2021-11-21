@@ -3,51 +3,50 @@ using System.IO;
 using AdamBarclay.WebAssetBuilder.Tasks;
 using Xunit;
 
-namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderMissingManifestTask_Tests
+namespace AdamBarclay.WebAssetBuilder.Tests.WebAssetBuilderMissingManifestTask_Tests;
+
+[ExcludeFromCodeCoverage]
+public static class Execute_Returns_True
 {
-	[ExcludeFromCodeCoverage]
-	public static class Execute_Returns_True
+	[Fact]
+	public static void When_The_Manifest_File_Does_Not_Exist()
 	{
-		[Fact]
-		public static void When_The_Manifest_File_Does_Not_Exist()
+		var task = new WebAssetBuilderMissingManifestTask
 		{
-			var task = new WebAssetBuilderMissingManifestTask
-			{
-				AssemblyName = "TestAssembly",
-				BuildEngine = BuildEngineHelper.Create().Object
-			};
+			AssemblyName = "TestAssembly",
+			BuildEngine = BuildEngineHelper.Create().Object
+		};
 
-			var fileSystem = FileSystemHelper.Create();
+		var fileSystem = FileSystemHelper.Create();
 
-			fileSystem.Setup(o => o.File!.Exists("AssetManifest.cs"))!.Returns(false);
+		fileSystem.Setup(o => o.File!.Exists("AssetManifest.cs"))!.Returns(false);
 
-			fileSystem.Setup(o => o.File!.CreateText("AssetManifest.cs"))!.Returns(
-				() => new StreamWriter(new MemoryStream()));
+		fileSystem.Setup(o => o.File!.CreateText("AssetManifest.cs"))!.Returns(
+			() => new StreamWriter(new MemoryStream()));
 
-			var returnValue = task.Execute(fileSystem.Object!);
+		var returnValue = task.Execute(fileSystem.Object!);
 
-			Assert.True(returnValue);
-		}
+		Assert.True(returnValue);
+	}
 
-		[Fact]
-		public static void When_The_Manifest_File_Exists()
+	[Fact]
+	public static void When_The_Manifest_File_Exists()
+	{
+		var task = new WebAssetBuilderMissingManifestTask
 		{
-			var task = new WebAssetBuilderMissingManifestTask
-			{
-				AssemblyName = "TestAssembly",
-				BuildEngine = BuildEngineHelper.Create().Object
-			};
+			AssemblyName = "TestAssembly",
+			BuildEngine = BuildEngineHelper.Create().Object
+		};
 
-			var fileSystem = FileSystemHelper.Create();
+		var fileSystem = FileSystemHelper.Create();
 
-			fileSystem.Setup(o => o.File!.Exists("AssetManifest.cs"))!.Returns(true);
+		fileSystem.Setup(o => o.File!.Exists("AssetManifest.cs"))!.Returns(true);
 
-			fileSystem.Setup(o => o.File!.CreateText("AssetManifest.cs"))!.Returns(
-				() => new StreamWriter(new MemoryStream()));
+		fileSystem.Setup(o => o.File!.CreateText("AssetManifest.cs"))!.Returns(
+			() => new StreamWriter(new MemoryStream()));
 
-			var returnValue = task.Execute(fileSystem.Object!);
+		var returnValue = task.Execute(fileSystem.Object!);
 
-			Assert.True(returnValue);
-		}
+		Assert.True(returnValue);
 	}
 }

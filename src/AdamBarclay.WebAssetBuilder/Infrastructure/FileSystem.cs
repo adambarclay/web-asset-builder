@@ -1,9 +1,8 @@
-namespace AdamBarclay.WebAssetBuilder.Infrastructure
-{
-	public interface FileSystem
-	{
-		DirectoryWrapper Directory { get; }
+namespace AdamBarclay.WebAssetBuilder.Infrastructure;
 
-		FileWrapper File { get; }
-	}
+public interface FileSystem
+{
+	DirectoryWrapper Directory { get; }
+
+	FileWrapper File { get; }
 }

@@ -5,53 +5,52 @@ using AdamBarclay.WebAssetBuilder.Infrastructure;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace AdamBarclay.WebAssetBuilder.Tasks
-{
-	public sealed class WebAssetBuilderMissingManifestTask : Task
-	{
-		[Required]
-		public string? AssemblyName { get; set; }
+namespace AdamBarclay.WebAssetBuilder.Tasks;
 
-		[ExcludeFromCodeCoverage]
-		public override bool Execute()
+public sealed class WebAssetBuilderMissingManifestTask : Task
+{
+	[Required]
+	public string? AssemblyName { get; set; }
+
+	[ExcludeFromCodeCoverage]
+	public override bool Execute()
+	{
+		return this.Execute(new FileSystemImplementation());
+	}
+
+	public bool Execute(FileSystem fileSystem)
+	{
+		if (fileSystem == null)
 		{
-			return this.Execute(new FileSystemImplementation());
+			throw new ArgumentNullException(nameof(fileSystem));
 		}
 
-		public bool Execute(FileSystem fileSystem)
+		var log = this.Log!;
+
+		if (this.AssemblyName is null)
 		{
-			if (fileSystem == null)
+			log.LogError("AssemblyName is null.");
+
+			return false;
+		}
+
+		try
+		{
+			if (!fileSystem.File.Exists("AssetManifest.cs"))
 			{
-				throw new ArgumentNullException(nameof(fileSystem));
+				AssetManifestWriter.OutputAssetManifest(
+					fileSystem,
+					this.AssemblyName,
+					new SortedList<string, string>(0));
 			}
 
-			var log = this.Log!;
+			return true;
+		}
+		catch (Exception exception)
+		{
+			log.LogErrorFromException(exception);
 
-			if (this.AssemblyName is null)
-			{
-				log.LogError("AssemblyName is null.");
-
-				return false;
-			}
-
-			try
-			{
-				if (!fileSystem.File.Exists("AssetManifest.cs"))
-				{
-					AssetManifestWriter.OutputAssetManifest(
-						fileSystem,
-						this.AssemblyName,
-						new SortedList<string, string>(0));
-				}
-
-				return true;
-			}
-			catch (Exception exception)
-			{
-				log.LogErrorFromException(exception);
-
-				return false;
-			}
+			return false;
 		}
 	}
 }

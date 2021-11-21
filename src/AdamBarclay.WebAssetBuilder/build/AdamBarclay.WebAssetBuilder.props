@@ -1,6 +1,6 @@
 <Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
 	<PropertyGroup>
-		<TaskFolder Condition=" '$(MSBuildRuntimeType)' == 'Core' ">net5.0</TaskFolder>
+		<TaskFolder Condition=" '$(MSBuildRuntimeType)' == 'Core' ">net6.0</TaskFolder>
 		<TaskFolder Condition=" '$(MSBuildRuntimeType)' != 'Core' ">net472</TaskFolder>
 		<TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(TaskFolder)\AdamBarclay.WebAssetBuilder.dll</TaskAssembly>
 		<AssetOutputPath>../../artifacts/assets/</AssetOutputPath>

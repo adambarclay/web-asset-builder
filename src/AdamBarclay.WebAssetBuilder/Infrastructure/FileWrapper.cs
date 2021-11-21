@@ -1,17 +1,16 @@
 using System.IO;
 
-namespace AdamBarclay.WebAssetBuilder.Infrastructure
+namespace AdamBarclay.WebAssetBuilder.Infrastructure;
+
+public interface FileWrapper
 {
-	public interface FileWrapper
-	{
-		StreamWriter CreateText(string path);
+	StreamWriter CreateText(string path);
 
-		bool Exists(string path);
+	bool Exists(string path);
 
-		Stream OpenRead(string path);
+	Stream OpenRead(string path);
 
-		Stream OpenWrite(string path);
+	Stream OpenWrite(string path);
 
-		byte[] ReadAllBytes(string path);
-	}
+	byte[] ReadAllBytes(string path);
 }
