@@ -23,7 +23,7 @@ public static class Execute_Outputs_File_Uncompressed_In_The_Static_Location
 
 		using (var memoryStream = new MemoryStream())
 		{
-			fileSystem.Setup(o => o.File.OpenWrite("OutputPath/static/f/font."))!.Returns(memoryStream);
+			fileSystem.Setup(o => o.File.OpenWrite("OutputPath/static/f/font"))!.Returns(memoryStream);
 
 			task.Execute(fileSystem.Object!);
 

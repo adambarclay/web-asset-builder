@@ -25,7 +25,7 @@ public static class Execute_Outputs_File_Compressed_In_The_Brotli_Location
 		{
 			fileSystem.Setup(
 					o => o.File.OpenWrite(
-						"OutputPath/br/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu."))!
+						"OutputPath/br/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu"))!
 				.Returns(memoryStream);
 
 			task.Execute(fileSystem.Object!);

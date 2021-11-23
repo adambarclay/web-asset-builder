@@ -25,7 +25,7 @@ public static class Execute_Outputs_Minified_Files
 		{
 			fileSystem.Setup(
 				o => o.File.OpenWrite(
-					"OutputPath/uncompressed/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu."))!.Returns(
+					"OutputPath/uncompressed/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu"))!.Returns(
 				memoryStream);
 
 			task.Execute(fileSystem.Object!);
@@ -54,7 +54,7 @@ public static class Execute_Outputs_Minified_Files
 		{
 			fileSystem.Setup(
 				o => o.File.OpenWrite(
-					"OutputPath/uncompressed/js/script-1qvd8xi1x7gicp9hzmn16150ffhqgemfx5eclq79349zpriln6."))!.Returns(
+					"OutputPath/uncompressed/js/script-1qvd8xi1x7gicp9hzmn16150ffhqgemfx5eclq79349zpriln6"))!.Returns(
 				memoryStream);
 
 			task.Execute(fileSystem.Object!);
@@ -81,7 +81,7 @@ public static class Execute_Outputs_Minified_Files
 
 		using (var memoryStream = new MemoryStream())
 		{
-			fileSystem.Setup(o => o.File.OpenWrite("OutputPath/uncompressed/svg/image."))!.Returns(memoryStream);
+			fileSystem.Setup(o => o.File.OpenWrite("OutputPath/uncompressed/svg/image"))!.Returns(memoryStream);
 
 			task.Execute(fileSystem.Object!);
 

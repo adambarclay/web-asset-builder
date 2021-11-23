@@ -58,7 +58,7 @@ internal static class FileProcessor
 			FileProcessor.OutputStatic(fileSystem, assetOutputPath, outputKey, fileContents);
 		}
 
-		return (true, outputKey.TrimEnd('.'));
+		return (true, outputKey);
 	}
 
 	private static string GenerateOutputKey(string fileName, byte[] fileContents, bool mangleFileName)
@@ -82,7 +82,7 @@ internal static class FileProcessor
 			fileNameWithoutExtension += "-" + FileProcessor.ToBase36String(hash);
 		}
 
-		return Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, fileNameWithoutExtension + ".");
+		return Path.Combine(Path.GetDirectoryName(fileName) ?? string.Empty, fileNameWithoutExtension);
 	}
 
 	private static (bool Error, byte[] FileContents) MinifyFile(

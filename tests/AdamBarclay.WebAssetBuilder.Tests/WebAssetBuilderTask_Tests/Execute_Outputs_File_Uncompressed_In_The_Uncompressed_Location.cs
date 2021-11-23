@@ -25,7 +25,7 @@ public static class Execute_Outputs_File_Uncompressed_In_The_Uncompressed_Locati
 		{
 			fileSystem.Setup(
 				o => o.File.OpenWrite(
-					"OutputPath/uncompressed/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu."))!.Returns(
+					"OutputPath/uncompressed/css/style-1k2pypdtz1f2y2i3ely4f9jwig46xuu5jqvp5w21gdrrs72usu"))!.Returns(
 				memoryStream);
 
 			task.Execute(fileSystem.Object!);
