@@ -12,7 +12,8 @@
 		<Copyright>Copyright © Adam Barclay</Copyright>
 		<Description>Minifies .css, .js, and .svg files, compresses with brotli and gzip, and adds a hash to the name of selected files for cache-busting.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<ProjectUrl>https://github.com/adambarclay/web-asset-builder</ProjectUrl>
+		<PackageProjectUrl>https://github.com/adambarclay/web-asset-builder</PackageProjectUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<Title>AdamBarclay.WebAssetBuilder</Title>
 	</PropertyGroup>
 	<ItemGroup>
